@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Carta</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'UserFont';
+      src: url('assets/fonts/font.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+    :root{--bg:#F4F1EA}
+    html,body{height:100%;margin:0}
+    body{display:flex;align-items:center;justify-content:center;background:#000;color:#fff}
+    .letter-page{position:fixed;inset:0;background-image:url('assets/letter-bg.jpg');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center}
+    /* removed white sheet background so text is directly on the background image */
+    .sheet{width:min(1100px,92vw);height:min(720px,82vh);background:transparent;padding:3.2rem;border-radius:12px;color:#fff;overflow:auto}
+    #typed{white-space:pre-wrap;font-family:'UserFont','Rock Salt', 'Segoe UI', Arial, sans-serif;font-size:clamp(1.3rem,2.6vw,2rem);line-height:1.75;color:#334eac;text-transform:none;font-weight:normal;font-style:normal}
+    .open-btn{display:none;margin:2rem auto 0;padding:.9rem 1.4rem;border-radius:10px;background:#A7C7E7;color:#fff;border:0;font-weight:700}
+    .open-btn.visible{display:block}
+  </style>
+</head>
+<body>
+  <div class="letter-page">
+    <div class="sheet" id="sheet">
+      <div id="typed"></div>
+      <button id="openGift" class="open-btn">-->
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // typing + sound
+    const text = `En el silencio de los días,  
+  cuando el viento trae memorias,  
+  apareces como un susurro de cielo,  
+  un reflejo azul que se mezcla con verdes eternos  
+  y con la blancura de la fe que nunca se apaga.  
+
+  Tu presencia es un misterio,  
+  como un jardín que no se abre a cualquiera,  
+  pero quien logra entrar descubre  
+  flores que no se marchitan,  
+  sabiduría que brilla como estrellas ocultas.  
+
+  Eres río que parece frío,  
+  pero guarda en su cauce  
+  la dulzura de lo secreto,  
+  la ternura de lo que pocos alcanzan.  
+
+  El tiempo contigo ha sido un regalo:  
+  cuatro estaciones multiplicadas,  
+  años que se sienten eternos,  
+  como páginas escritas con excelencia,  
+  como un canto que Dios mismo bendijo.  
+
+  Y aunque la vida a veces  
+  te muestre frágil,  
+  tu espíritu es fuerte,  
+  tu mente es un templo de claridad,  
+  y tu corazón, un faro que guía.  
+
+  Hoy celebro tu existencia,  
+  con palabras que buscan abrazarte,  
+  con la certeza de que eres  
+  un milagro escondido,  
+  una obra divina,  
+  una amiga que guardo en lo más hondo.`
+    const out = document.getElementById('typed')
+    const openBtn = document.getElementById('openGift')
+    let i=0
+    // play full song instead of tiny typing ticks; stop when user opens the gift
+    const song = new Audio('assets/Friends.mp3')
+    song.volume = 0.6
+    song.loop = true
+    function typeNext(){
+      if(i<=text.length){
+        out.textContent = text.slice(0,i)
+        i++
+        // start the song on the first visible character
+        if(i===1){ try{ song.play().catch(()=>console.warn('Friends.mp3 no disponible o bloqueado')) }catch(e){} }
+        setTimeout(typeNext, 34 + Math.random()*40)
+      } else {
+        openBtn.classList.add('visible')
+      }
+    }
+    window.addEventListener('load', ()=> setTimeout(typeNext,300))
+
+    openBtn.addEventListener('click', ()=>{
+      // stop the song when user opens the gift
+      try{ song.pause(); song.currentTime = 0 }catch(e){}
+      try{
+        if(window.opener && typeof window.opener.openGiftFromLetter === 'function'){
+          window.opener.openGiftFromLetter()
+          window.close()
+          return
+        }
+      }catch(e){}
+      // fallback: redirect to index and request farewell (gallery removed)
+      window.location.href = 'index.html?open=farewell'
+    })
+  </script>
+</body>
+</html>

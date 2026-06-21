@@ -1,0 +1,116 @@
+:root{
+  --bg:#F4F1EA;
+  --accent:#A7C7E7;
+  --mint:#B8E0D2;
+  --lilac:#CDB4DB;
+  --max-width:1100px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; background:var(--bg); color:#333}
+.app{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:0;margin:0}
+.stage{display:none;width:100%;max-width:var(--max-width);margin:0;align-items:center;justify-content:center}
+.stage--active{display:flex}
+
+/* Login */
+.login-card{width:min(420px,92vw);background:#fff;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.08);padding:2rem;display:flex;flex-direction:column;align-items:center}
+.login-card h1{margin:0 0 1rem;color:var(--lilac)}
+.pin-display{font-size:1.6rem;letter-spacing:12px;margin-bottom:1rem}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;width:100%}
+.pad button{padding:1rem;font-size:1.1rem;border-radius:8px;border:0;background:var(--accent);color:#fff}
+.hint{margin-top:.8rem;color:#666}
+
+/* Cake (GIF) */
+.cake-wrap{display:flex;flex-direction:column;align-items:center;gap:1.4rem;padding:4vh 2vw}
+.gif-frame{position:relative;display:inline-block;overflow:hidden}
+
+/* Deep edge fade using inset shadow in the app background color */
+.gif-frame::before{
+  content: "";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:0;
+  /* scalable deep blur using clamp: smaller on small screens, larger on wide */
+  box-shadow: inset 0 0 clamp(60px,8vw,220px) #F4F1EA;
+  z-index:2;
+}
+.cake-gif{width:min(720px,78vw);max-width:100%;height:auto;border-radius:0;box-shadow:none;display:block}
+.gif-overlay{position:absolute;left:12px;bottom:12px;width:clamp(110px,14vw,200px);height:auto;border-radius:0;box-shadow:none;z-index:3;transform-origin:center}
+.gif-overlay{animation:bellShake 6s ease-in-out infinite}
+.note{position:absolute;right:12px;bottom:12px;background:linear-gradient(#fff,#f8fff9);padding:8px 10px;border-radius:14px;border:1px solid rgba(0,0,0,0.03);display:flex;align-items:center;gap:.6rem;z-index:4}
+.note button{background:var(--mint);border:0;padding:.5rem .8rem;border-radius:8px}
+
+/* Redecorated LISTO button */
+#btn-listo{
+  background: linear-gradient(135deg,var(--mint) 0%, var(--accent) 100%);
+  color:#fff;
+  border:0;
+  padding:1rem 1.4rem;
+  border-radius:999px;
+  font-weight:800;
+  font-size:1.12rem;
+  box-shadow:0 12px 26px rgba(0,0,0,0.10);
+  cursor:pointer;
+  transition: transform .15s ease, box-shadow .15s ease, opacity .12s ease;
+}
+#btn-listo:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(0,0,0,0.12)}
+#btn-listo:active{transform:translateY(0)}
+#btn-listo:focus{outline:3px solid rgba(167,199,231,0.35);outline-offset:3px}
+
+@media (max-width:600px){
+  #btn-listo{padding:.7rem 1rem;font-size:1rem}
+  .note{right:12px;bottom:12px}
+}
+
+@keyframes bellShake{
+  0%,80%,100%{transform:translateY(0) rotate(0)}
+  82%{transform:translateY(-6px) rotate(-6deg)}
+  84%{transform:translateY(4px) rotate(6deg)}
+  86%{transform:translateY(-3px) rotate(-3deg)}
+}
+
+/* Letter */
+.envelope{display:flex;align-items:center;justify-content:center;padding:6vh 2vw}
+.paper{width:min(760px,92vw);height:min(60vh,460px);background:linear-gradient(180deg,#fff 0%,#fffefc 100%);border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,0.08);padding:2rem;position:relative}
+#typed-text{white-space:pre-wrap;font-family:inherit;font-size:1.05rem;color:#333}
+#open-gift{position:absolute;left:50%;transform:translateX(-50%);bottom:18px;padding:.6rem 1rem;border-radius:8px;background:var(--lilac);color:#fff;border:0}
+
+/* Gallery removed — styles for gallery/fragment layout deleted */
+
+/* Farewell */
+.farewell{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6vh 2vw;text-align:center}
+/* farewell image and button */
+.farewell-img{max-width:78vw;max-height:56vh;border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,0.12);display:block;margin:1.2rem auto}
+.bye{margin-top:0.9rem;background:linear-gradient(135deg,var(--mint),var(--accent));color:#fff;border:0;padding:.8rem 1.2rem;border-radius:999px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:.6rem;align-self:center;width:fit-content}
+.bye:focus{outline:3px solid rgba(167,199,231,0.35);outline-offset:3px}
+
+.farewell-title{font-size:clamp(1.6rem,3.4vw,2.2rem);font-weight:900;margin:0}
+.farewell-subtext{font-size:clamp(1rem,2.2vw,1.3rem);margin-top:.6rem;color:#444}
+
+/* inline farewell video */
+.farewell-video{max-width:80vw;max-height:52vh;border-radius:10px;box-shadow:0 16px 40px rgba(0,0,0,0.18);margin-top:1rem;background:#000}
+.farewell-title.hidden,.farewell-subtext.hidden,.farewell-img.hidden,.farewell-video.hidden,.bye.hidden{display:none}
+
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:40}
+.modal-inner{width:min(900px,95vw);background:#fff;border-radius:10px;padding:1rem;position:relative}
+.modal-inner video{width:100%;height:auto;border-radius:8px}
+.modal-inner button{position:absolute;right:10px;top:10px;border:0;background:transparent;font-size:1.4rem}
+
+/* Envelope modal specifics */
+.envelope-modal-inner{max-width:760px;padding:1.2rem;background:transparent;box-shadow:none;display:flex;align-items:center;justify-content:center}
+.envelope-modal-inner img{display:block;margin:auto;max-width:60vw;width:clamp(96px,12vw,240px);height:auto;border-radius:8px}
+.envelope-modal-inner button{right:6px;top:6px;color:#fff}
+
+/* small screens */
+@media (max-width:600px){
+  .pad button{padding:.8rem}
+  .cake{width:80vw;height:28vh}
+  .frame{min-width:180px;height:140px}
+}
+
+/* helper */
+.hidden{display:none}
+
+/* confetti canvas full-bleed */
+#confetti-canvas{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none}
