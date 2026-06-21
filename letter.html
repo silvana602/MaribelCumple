@@ -21,6 +21,10 @@
     /* removed white sheet background so text is directly on the background image */
     .sheet{width:min(1100px,92vw);height:min(720px,82vh);background:transparent;padding:3.2rem;border-radius:12px;color:#fff;overflow:auto}
     #typed{white-space:pre-wrap;font-family:'UserFont','Rock Salt', 'Segoe UI', Arial, sans-serif;font-size:clamp(1.3rem,2.6vw,2rem);line-height:1.75;color:#334eac;text-transform:none;font-weight:normal;font-style:normal}
+    @media (max-width:420px){
+      /* Slightly smaller font on small phones to avoid overflow */
+      #typed{font-size:1.05rem}
+    }
     .open-btn{display:none;margin:2rem auto 0;padding:.9rem 1.4rem;border-radius:10px;background:#A7C7E7;color:#fff;border:0;font-weight:700}
     .open-btn.visible{display:block}
   </style>
